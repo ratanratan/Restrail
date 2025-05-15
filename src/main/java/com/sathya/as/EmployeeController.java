@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,9 @@ public class EmployeeController {
     @Autowired
     private EmployeeService userService;
 
+    @Autowired
+    EmployeeRepository employeeRepository;
+    
     // POST: Register a new user
     @PostMapping("/register")
     public Employee registerUser(@RequestBody Employee user) {
@@ -29,4 +34,17 @@ public class EmployeeController {
     public List<Employee> getAllUsers() {
         return userService.getAllUsers();
     }
+    
+    
+    
+    @DeleteMapping("delete/{id}")
+    public String deleteById(@PathVariable("id") Long id)
+    {
+    	employeeRepository.deleteById(id);
+    	return "data deleted";
+    }
+    
+    
+    
+    
 }
